@@ -393,7 +393,8 @@ covid19 %>%
   labs(title = "Total number of cases per 10000 people") +
   theme_map() +
   theme(legend.background = element_blank(),
-        plot.title = element_text(color = "black", size = 13, face = "bold", hjust = 0.5))
+        plot.title = element_text(color = "black", size = 13, face = "bold", hjust = 0.5),
+        legend.position = "right")
 ```
 
   13. **CHALLENGE** Choose 4 dates spread over the time period of the data and create the same map as in exercise 12 for each of the dates. Display the four graphs together using faceting. What do you notice?
@@ -482,52 +483,52 @@ mpls_all <- mpls_nbhd %>%
   17. Use `leaflet` to create a map from the `mpls_all` data  that colors the neighborhoods by `prop_suspicious`. Display the neighborhood name as you scroll over it. Describe what you observe in the map.
   
 ```{r}
-pal <- colorFactor("viridis",
+pal <- colorNumeric("viridis",
               domain = mpls_all$suspicious_prop) 
 
 leaflet(data = mpls_all) %>% #base plot
   addTiles() %>% 
   addPolygons(
     fillColor = ~pal(suspicious_prop), #fills according to that variable
-    fillOpacity = 0.5,
+    fillOpacity = 0.8,
     popup = ~paste(BDNAME,": ",
                             round(suspicious_prop, 2),
                             sep=""))  %>% #like alpha in ggplot %>%  
    # Add a legend
   addLegend(pal = pal, 
             values = ~suspicious_prop, 
-            opacity = 0.5, 
-            title = "The percentage of stops being suspicious",
+            opacity = 0.8, 
+            title = "Suspicious stops' percentage",
             position = "bottomright") 
 ```
   
-In here, the brigher color, the higher of the percentage for suspicious problems. When we see on the map, in the middle area, more problems were attributed to suspicious problems, while in the upper right area, the proportion is smaller (the probability ranges from 0.29 to 0.39). Meanwhile, when we move to the bottom right of the area,in Standish, Northrop, the proportion of suspicious cases is significantly higher, in some areas around 90%.
+In here, the brigher color illustrates the higher of the percentage for suspicious problems. When we see on the map,in the upper right area, the proportion is relatively small (the probability ranges from 0.28 to 0.39). Meanwhile, when we move to the bottom right of the area,in Standish, Northrop, the proportion of suspicious cases is significantly higher, in some areas around 90%.
 
   18. Use `leaflet` to create a map of your own choosing. Come up with a question you want to try to answer and use the map to help answer that question. Describe what your map shows. 
   
 ```{r}
-pal <- colorFactor("viridis",
+pal <- colorNumeric("viridis",
               domain = mpls_all$black) 
 
 leaflet(data = mpls_all) %>% #base plot
   addTiles() %>% 
   addPolygons(
     fillColor = ~pal(black), #fills according to that variable
-    fillOpacity = 0.5,
+    fillOpacity = 0.8,
     popup = ~paste(BDNAME,": ",
                             round(black, 2),
                             sep="")) %>%   #like alpha in ggplot %>% 
    # Add a legend
   addLegend(pal = pal, 
             values = ~black, 
-            opacity = 0.5, 
-            title = "The median income of the stops",
+            opacity = 0.8, 
+            title = "Percentage of black people",
             position = "bottomright") 
   
 ```
   
   
-  In here, what I am trying to answer is the percentage of black people that were stopped by the Minneapolis Police Department in 2017. We can see that in the central area, the percentage of black people that were stopped is much higher from the eastern south side in the map, where the percentage of black people only ranges around 0.01 to 0.06. 
+In here, what I am trying to answer is the percentage of black people in the area. We can see that in the central area, the percentage of black people is much higher from the eastern south side in the map, where the percentage of black people only ranges around 0.01 to 0.06. The percentage of black people is much higher when we move to the upper left of the map, where it ranges from 0.3 to 0.5. 
   
 ## GitHub link
 
